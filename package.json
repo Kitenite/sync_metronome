@@ -1,0 +1,16 @@
+{
+  "name": "metro",
+  "version": "1.0.0",
+  "description": "Metronome sync app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kiet Ho",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
+    "timesync": "^1.0.5"
+  }
+}
