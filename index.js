@@ -37,7 +37,8 @@ io.on('connection', function (socket) {
     console.log("Start timer")
     beatCounts = 0;
     startTime = Date.now()
-    var intervalTimer = setInterval(function(){
+    clearInterval(intervalTimer);
+    intervalTimer = setInterval(function(){
       ++beatCounts;
       console.log(beatCounts);
     }, rate)
@@ -65,9 +66,7 @@ io.on('connection', function (socket) {
         startTime = null;
         clearInterval(intervalTimer);
         beatCounts = 0;
-
       }
-
    });
   // Listen for clients synching time
   socket.on('timesync', function (data) {

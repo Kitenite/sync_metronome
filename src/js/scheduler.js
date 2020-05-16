@@ -77,9 +77,3 @@
     }, timeDifference);
 
   });
-
-  function playSound(){
-    // var now = new Date(ts.now());
-    // console.log('Pinging: ' + now.toISOString() + ' ms<br>');
-    console.log("Ping!")
-  }
