@@ -16,7 +16,6 @@ self.onmessage=function(e){
 		}
 	}
 	else if (e.data=="stop") {
-		console.log("stopping");
 		clearInterval(timerID);
 		timerID=null;
 	}

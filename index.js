@@ -12,8 +12,8 @@ var allClients = [];
 var startTime;
 var intervalTimer;
 var beatCounts = 0;
-var BPM = 120
-var rate = 60000/BPM
+var tempo = 120
+var rate = 60000/tempo
 
 // Delay start time to send out to client
 var DELAY_INTERVALS = 1;
@@ -34,26 +34,29 @@ io.on('connection', function (socket) {
   // If first client, set up start time
   if (startTime == null){
     // Set up start time, sync time
-    console.log("Start timer")
-    beatCounts = 0;
-    startTime = Date.now()
-    clearInterval(intervalTimer);
-    intervalTimer = setInterval(function(){
-      ++beatCounts;
-      console.log(beatCounts);
-    }, rate)
+    startInterval()
   }
-
-
   // Send calculated start time to client
-
-  // If session already exists, calculate start time using existing start time
   allClients.push(socket);
   console.log("number of clients: " + allClients.length)
-
   socket.on('play', function() {
     console.log("Play called");
     sendNextBeat(socket);
+  });
+  // New tempo sent
+  socket.on('newTempo', function (data) {
+    console.log("new tempo", data)
+    if (tempo != data.tempo) {
+      tempo = data.tempo
+      rate = 60000/tempo
+      // Reset everything for new tempo
+      resetInterval()
+      startInterval()
+      
+      allClients.forEach(function (socket){
+        sendNextBeat(socket)
+      });
+    }
   });
 
   socket.on('disconnect', function() {
@@ -62,10 +65,7 @@ io.on('connection', function (socket) {
       console.log("number of clients: " + allClients.length)
       // If last client, set start time to null
       if(allClients.length == 0){
-        console.log("reset timer")
-        startTime = null;
-        clearInterval(intervalTimer);
-        beatCounts = 0;
+        resetInterval();
       }
    });
   // Listen for clients synching time
@@ -85,6 +85,24 @@ function sendNextBeat(socket){
   console.log("nextBeat: " , nextBeat)
   socket.emit('nextBeat', {
     nextBeat: nextBeat,
-    rate: rate
+    tempo: tempo
   });
+}
+
+function startInterval(){
+  console.log("Start timer")
+  beatCounts = 0;
+  startTime = Date.now()
+  clearInterval(intervalTimer);
+  intervalTimer = setInterval(function(){
+    ++beatCounts;
+    console.log(beatCounts);
+  }, rate)
+}
+
+function resetInterval(){
+  console.log("reset timer")
+  startTime = null;
+  clearInterval(intervalTimer);
+  beatCounts = 0;
 }
