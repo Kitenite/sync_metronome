@@ -19,7 +19,7 @@ var rate = 60000/tempo
 var DELAY_INTERVALS = 1;
 
 // Set up server
-server.listen(port);
+server.listen(process.env.PORT || port);
 console.log('Server listening at http://localhost:' + port);
 
 // serve static index.html
@@ -52,7 +52,7 @@ io.on('connection', function (socket) {
       // Reset everything for new tempo
       resetInterval()
       startInterval()
-      
+
       allClients.forEach(function (socket){
         sendNextBeat(socket)
       });
@@ -90,13 +90,13 @@ function sendNextBeat(socket){
 }
 
 function startInterval(){
-  console.log("Start timer")
+  console.log("start timer")
   beatCounts = 0;
   startTime = Date.now()
   clearInterval(intervalTimer);
   intervalTimer = setInterval(function(){
     ++beatCounts;
-    console.log(beatCounts);
+    // console.log(beatCounts);
   }, rate)
 }
 
