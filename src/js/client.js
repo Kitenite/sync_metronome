@@ -74,7 +74,9 @@
         // clearInterval(playInterval);
         // set new interval to play sound at rate
         // playInterval = setInterval(playSound, rate);
-        $(".play").html(play());
+        if (!isPlaying){
+          $(".play").html(play());
+        }
       }, timeDifference);
     } else {
       console.log("not ready")
