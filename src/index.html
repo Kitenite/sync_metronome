@@ -18,12 +18,11 @@
 </head>
 <body>
   <div id="controls">
-      <!-- <div><button class="play" onclick="this.innerText = play();">play</button></div> -->
-      <div><button class="play" onclick="emitPlay();">play</button></div>
+      <div><button class="play" onclick="emitPlay();" type="button">play</button></div>
       <div id="tempoBox">Tempo:
         <span id="showTempo">120</span>BPM
         <input id="tempo" type="range" min="30.0" max="160.0" step="1" value="120" style="height: 20px; width: 200px" oninput="document.getElementById('showTempo').innerText=event.target.value;">
-        <button id="tempo-button" onclick="sendTempo();">change</button>
+        <button id="tempo-button" type="button" onclick="sendTempo();">change</button>
       </div>
       <div>Resolution:
         <select onchange="noteResolution = this.selectedIndex;">

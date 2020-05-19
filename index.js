@@ -1,76 +1,77 @@
 // Server variables
+var express = require('express')
 var path = require('path');
 var timesyncServer = require('timesync/server');
-var express = require('express')
 var app = express();
-var server = require('http').Server(app);
-const io = require('socket.io')(server);
-var port = 8080;
+var http = require('http');
+PORT = process.env.PORT || 3000;
 
-// Clients
+// io client managenent
 var allClients = [];
+
+// Tempo trackers
 var startTime;
 var intervalTimer;
 var beatCounts = 0;
 var tempo = 120
 var rate = 60000/tempo
+DELAY_INTERVALS = 1;
 
-// Delay start time to send out to client
-var DELAY_INTERVALS = 1;
+// Start server
+var server = app.listen(PORT, function () {
+   var host = server.address().address;
+   var port = server.address().port;
+   console.log(`Listening at http://localhost:${PORT}`);
+});
 
-// Set up server
-server.listen(process.env.PORT || port);
-console.log('Server listening at http://localhost:' + port);
-
-// serve static index.html
-app.use(express.static(path.join(__dirname, 'src')));
-
-// handle timesync requests
+// Get request handlers
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname + '/src/index.html'));
+});
+app.use(express.static('src'));
 app.use('/timesync', timesyncServer.requestHandler);
 
-// Track socket connections
+
+// Handle sockets
+var io = require('socket.io').listen(server);
 io.on('connection', function (socket) {
-  // On connection, calculate a new start time based on rate and emit it
-  // If first client, set up start time
+  // Keep track of all online clients
+  allClients.push(socket);
+
+  // Start calculating tempo
   if (startTime == null){
-    // Set up start time, sync time
     startInterval()
   }
-  // Send calculated start time to client
-  allClients.push(socket);
-  console.log("number of clients: " + allClients.length)
-  socket.on('play', function() {
-    console.log("Play called");
+  // client request handlers
+  socket.on('requestNextBeat', function() {
     sendNextBeat(socket);
   });
-  // New tempo sent
-  socket.on('newTempo', function (data) {
-    console.log("new tempo", data)
+
+  socket.on('requestNewTempo', function (data) {
+    // If new tempo, reset everything, start new timer
     if (tempo != data.tempo) {
+      resetInterval()
       tempo = data.tempo
       rate = 60000/tempo
-      // Reset everything for new tempo
-      resetInterval()
       startInterval()
-
       allClients.forEach(function (socket){
         sendNextBeat(socket)
       });
     }
   });
 
+  // On client disconnect, remove client from list
   socket.on('disconnect', function() {
       var i = allClients.indexOf(socket);
       allClients.splice(i, 1);
-      console.log("number of clients: " + allClients.length)
-      // If last client, set start time to null
+      // If no more client left, end timer
       if(allClients.length == 0){
         resetInterval();
       }
    });
-  // Listen for clients synching time
+
+  // sync time between all clients and central server
   socket.on('timesync', function (data) {
-    // console.log('message', data);
     socket.emit('timesync', {
       id: data && 'id' in data ? data.id : null,
       result: Date.now()
@@ -78,31 +79,31 @@ io.on('connection', function (socket) {
   });
 });
 
+
+// Tempo management helpers
+
+// Calculate and send the next coming beat for client to run
 function sendNextBeat(socket){
-  console.log(Date.now()-startTime)
-  console.log(beatCounts*rate)
   var nextBeat = startTime + beatCounts*rate + rate;
-  console.log("nextBeat: " , nextBeat)
-  socket.emit('nextBeat', {
+  socket.emit('nextBeatSent', {
     nextBeat: nextBeat,
     tempo: tempo
   });
 }
 
+// Start keeping track of central time
 function startInterval(){
-  console.log("start timer")
-  beatCounts = 0;
-  startTime = Date.now()
   clearInterval(intervalTimer);
+  beatCounts = 0;
+  startTime = Date.now();
   intervalTimer = setInterval(function(){
     ++beatCounts;
-    // console.log(beatCounts);
   }, rate)
 }
 
+// Reset central clock
 function resetInterval(){
-  console.log("reset timer")
-  startTime = null;
   clearInterval(intervalTimer);
+  startTime = null;
   beatCounts = 0;
 }

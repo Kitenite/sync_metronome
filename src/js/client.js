@@ -1,103 +1,94 @@
-  // Metronome part
-  var rate;
-  var playInterval;
-  var socket1 = io('http://localhost:8080');
+// Socket
+var socket = io.connect();
 
-  var ts = timesync.create({
-    server: socket1,
-    interval: 5000
-  });
+// metronome tracker
+var rate;
+var playInterval;
+var firstPlay = true;
+var waitingForBeat = false;
 
-  ts.on('sync', function (state) {
-    // Reflect sync on next beat
-  });
+// timesync
+var ts = timesync.create({
+  server: socket,
+  interval: 5000
+});
 
-  var firstActivate = true;
-  var readyToPlay = false;
-  function emitPlay(){
-    // Get around playing from user click
-    if (firstActivate){
-      play()
-      play()
-      firstActivate = false
-    }
-    if(!isPlaying){
-      socket1.emit('play');
-      $(".play").html("wait");
-      readyToPlay = true
-    } else{
+// Media client handlers
+function emitPlay(){
+  // Activate playing onclick, necessary for browsers
+  if (firstPlay){
+    play()
+    play()
+    firstPlay = false
+  }
+
+  // Request next beat from server
+  if(!isPlaying){
+    socket.emit('requestNextBeat');
+    $(".play").html("wait");
+    waitingForBeat = true
+  } else{
+    $(".play").html(play());
+    waitingForBeat = false
+  }
+}
+
+// Receive next beat from server
+socket.on('nextBeatSent', function (data) {
+  if (!waitingForBeat){
+    console.log("not ready")
+    return
+  }
+  updateTempo(data.tempo)
+  timeDifference = data.nextBeat - ts.now();
+  while (timeDifference <= 0){
+    timeDifference += rate
+  }
+  // console.log("Starting in: " + timeDifference +"ms");
+  setTimeout(function(){
+    $(".play").html(play());
+    if (!isPlaying){
       $(".play").html(play());
-      readyToPlay = false
     }
+  }, timeDifference);
+});
+
+// New tempo received, update if changed
+function updateTempo(new_tempo){
+  if (new_tempo != tempo){
+    tempo = new_tempo
+    rate = 60000/tempo
+    $("#tempo").val(tempo)
+    $("#showTempo").html(tempo);
   }
+}
 
-  ts.on('change', function (offset) {
-    console.log('changed offset: ' + offset + ' ms');
-  });
+// Send new tempo to server
+function sendTempo(){
+  tempo = $("#tempo").val();
+  socket.emit("requestNewTempo", {tempo: tempo})
+}
 
-  ts.send = function (socket, data, timeout) {
-    // console.log('send', data);
-    return new Promise(function (resolve, reject) {
-      var timeoutFn = setTimeout(reject, timeout);
-      socket.emit('timesync', data, function () {
-        clearTimeout(timeoutFn);
-        resolve();
-      });
+// Time sync handlers
+socket.on('timesync', function (data) {
+  ts.receive(null, data);
+});
+
+ts.send = function (socket, data, timeout) {
+  return new Promise(function (resolve, reject) {
+    var timeoutFn = setTimeout(reject, timeout);
+    socket.emit('timesync', data, function () {
+      clearTimeout(timeoutFn);
+      resolve();
     });
-  };
-
-  socket1.on('timesync', function (data) {
-    // console.log('receive', data);
-    ts.receive(null, data);
-    // Correct internal next beat
   });
+};
 
-  socket1.on('nextBeat', function (data) {
-    // Receive next beat from server, call schedule on next beat
+// Not used handlers, kept for reference
 
-    if (readyToPlay){
-      console.log("nextBeat and rate received: ", data);
-      // Set play based on startTime and rate
-      // Temp fake nextBeat
-      // set new rate
-      updateTempo(data.tempo)
-      var nextBeat = data.nextBeat;
-      // Calculate next beat
-      // Wait until next beat, set interval
-      var now = ts.now()
-      timeDifference = nextBeat - now;
-      if (timeDifference <= 0){
-        timeDifference += rate
-      }
-      console.log("Starting in: " + timeDifference +"ms");
-      setTimeout(function(){
-        // clearInterval(playInterval);
-        // set new interval to play sound at rate
-        // playInterval = setInterval(playSound, rate);
-        $(".play").html(play());
-        if (!isPlaying){
-          $(".play").html(play());
-        }
-      }, timeDifference);
-    } else {
-      console.log("not ready")
-    }
-  });
-
-  function updateTempo(new_tempo){
-    console.log("Old tempo: ", tempo)
-    console.log("newTempo: ", new_tempo)
-    // tempo = event.target.value;
-    // document.getElementById('showTempo').innerText=tempo;
-    if (new_tempo != tempo){
-      tempo = new_tempo
-      rate = 60000/tempo
-      $("#tempo").val(tempo)
-      $("#showTempo").html(tempo);
-    }
-  }
-
-  function sendTempo(){
-    tempo = $("#tempo").val();
-    socket1.emit("newTempo", {tempo: tempo})
-  }
+// ts.on('sync', function (state) {
+//   console.log(state)
+// });
+// ts.on('change', function (offset) {
+//   console.log('changed offset: ' + offset + ' ms');
+// });
