@@ -28,7 +28,7 @@ function emitPlay(){
     $("#play-button").html("wait");
     waitingForBeat = true
   } else{
-    $(".play").html(play());
+    $("#play-button").html(play());
     waitingForBeat = false
   }
 }
@@ -40,9 +40,11 @@ socket.on('nextBeatSent', function (data) {
     return
   }
   updateTempo(data.tempo)
-  timeDifference = data.nextBeat - ts.now();
+  var nextBeat = data.nextBeat
+  timeDifference = nextBeat - ts.now();
   while (timeDifference <= 0){
-    timeDifference += rate
+    nextBeat+=rate
+    timeDifference = nextBeat - ts.now();
   }
   // console.log("Starting in: " + timeDifference +"ms");
   setTimeout(function(){
@@ -68,6 +70,19 @@ function sendTempo(){
   tempo = $("#tempo").val();
   socket.emit("requestNewTempo", {tempo: tempo})
 }
+
+// Sync all clients
+function sync(){
+  socket.emit("syncDevices")
+}
+
+// Auxiliary change to tempo,
+function tempoChange(amount){
+  var newTempo = parseInt($("#tempo").val()) + amount;
+  $("#tempo").val(newTempo)
+  $("#showTempo").html(newTempo);
+}
+
 
 // Time sync handlers
 socket.on('timesync', function (data) {

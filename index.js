@@ -60,6 +60,15 @@ io.on('connection', function (socket) {
     }
   });
 
+  // sync all clients
+  socket.on('syncDevices' , function(){
+    resetInterval()
+    startInterval()
+    allClients.forEach(function (socket){
+      sendNextBeat(socket)
+    });
+  });
+
   // On client disconnect, remove client from list
   socket.on('disconnect', function() {
       var i = allClients.indexOf(socket);

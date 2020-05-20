@@ -19,6 +19,8 @@
 </head>
 <body>
   <div id="controls">
+    <button id="sync" onclick="sync();" type="button">sync</button>
+
     <!-- Tempo -->
     <div id="tempoBox">Tempo:
       <span id="showTempo">120</span>BPM
@@ -35,9 +37,9 @@
     </div>
     <!-- Media buttons -->
     <div id="media-buttons">
-      <button id="tempo-decrease-button" onclick="" type="button">decrease</button>
+      <button id="tempo-decrease-button" onclick="tempoChange(-1)" type="button">decrease</button>
       <button id="play-button" onclick="emitPlay();" type="button">play</button>
-      <button id="tempo-increase-button" onclick="" type="button">increase</button>
+      <button id="tempo-increase-button" onclick="tempoChange(1)" type="button">increase</button>
     </div>
   </div>
 </body>
