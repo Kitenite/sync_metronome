@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="UTF-8">
-
   <!-- include es5-shim and es5-shim when support for older browsers is needed -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.23.0/es6-shim.min.js"></script>
@@ -15,22 +14,31 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/timesync/timesync.js"></script>
   <script src="/js/client.js"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <div id="controls">
-      <div><button class="play" onclick="emitPlay();" type="button">play</button></div>
-      <div id="tempoBox">Tempo:
-        <span id="showTempo">120</span>BPM
-        <input id="tempo" type="range" min="30.0" max="160.0" step="1" value="120" style="height: 20px; width: 200px" oninput="document.getElementById('showTempo').innerText=event.target.value;">
-        <button id="tempo-button" type="button" onclick="sendTempo();">change</button>
-      </div>
-      <div>Resolution:
-        <select onchange="noteResolution = this.selectedIndex;">
-          <option>16th notes
-          <option>8th notes
-          <option selected>Quarter notes
-        </select>
-      </div>
+    <!-- Tempo -->
+    <div id="tempoBox">Tempo:
+      <span id="showTempo">120</span>BPM
+      <input id="tempo" type="range" min="30.0" max="160.0" step="1" value="120" style="height: 20px; width: 200px" oninput="document.getElementById('showTempo').innerText=event.target.value;">
+      <button id="tempo-button" type="button" onclick="sendTempo();">change</button>
+    </div>
+    <!-- Resolution -->
+    <div id="resultion">Resolution:
+      <select onchange="noteResolution = this.selectedIndex;">
+        <option>16th notes
+        <option>8th notes
+        <option selected>Quarter notes
+      </select>
+    </div>
+    <!-- Media buttons -->
+    <div id="media-buttons">
+      <button id="tempo-decrease-button" onclick="" type="button">decrease</button>
+      <button id="play-button" onclick="emitPlay();" type="button">play</button>
+      <button id="tempo-increase-button" onclick="" type="button">increase</button>
+    </div>
   </div>
 </body>
 </html>

@@ -1,3 +1,6 @@
+// Metronome library by cwilso
+// https://github.com/cwilso/metronome/
+
 var audioContext = null;
 var unlocked = false;
 var isPlaying = false;      // Are we currently playing?
