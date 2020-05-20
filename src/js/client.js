@@ -2,7 +2,8 @@
 var socket = io.connect();
 
 // metronome tracker
-var rate;
+var tempo = 120;
+var rate = 60000/tempo;
 var playInterval;
 var firstPlay = true;
 var waitingForBeat = false;
@@ -46,7 +47,6 @@ socket.on('nextBeatSent', function (data) {
     nextBeat+=rate
     timeDifference = nextBeat - ts.now();
   }
-  // console.log("Starting in: " + timeDifference +"ms");
   setTimeout(function(){
     $("#play-button").html(play());
     if (!isPlaying){
