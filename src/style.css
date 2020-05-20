@@ -11,6 +11,7 @@ html,body {
   justify-content: center;
   align-items: center;
   resize: both;
+  flex-direction: column;
 }
 
 /* Mobile */

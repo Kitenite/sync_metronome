@@ -55,6 +55,10 @@ socket.on('nextBeatSent', function (data) {
   }, timeDifference);
 });
 
+socket.on("clientCount", function(data){
+  $("#client-count").html(data.count)
+});
+
 // New tempo received, update if changed
 function updateTempo(new_tempo){
   if (new_tempo != tempo){

@@ -35,8 +35,11 @@ app.use('/timesync', timesyncServer.requestHandler);
 // Handle sockets
 var io = require('socket.io').listen(server);
 io.on('connection', function (socket) {
+
   // Keep track of all online clients
   allClients.push(socket);
+  // Connection change
+  updateActiveClients()
 
   // Start calculating tempo
   if (startTime == null){
@@ -73,6 +76,7 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function() {
       var i = allClients.indexOf(socket);
       allClients.splice(i, 1);
+      updateActiveClients()
       // If no more client left, end timer
       if(allClients.length == 0){
         resetInterval();
@@ -115,4 +119,13 @@ function resetInterval(){
   clearInterval(intervalTimer);
   startTime = null;
   beatCounts = 0;
+}
+
+// Send number of clients out
+function updateActiveClients(){
+  var clientCount = allClients.length
+  allClients.forEach(function (socket){
+    socket.emit("clientCount", {count: clientCount})
+  });
+
 }
