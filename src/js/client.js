@@ -25,7 +25,7 @@ function emitPlay(){
   // Request next beat from server
   if(!isPlaying){
     socket.emit('requestNextBeat');
-    $(".play").html("wait");
+    $("#play-button").html("wait");
     waitingForBeat = true
   } else{
     $(".play").html(play());
@@ -46,9 +46,9 @@ socket.on('nextBeatSent', function (data) {
   }
   // console.log("Starting in: " + timeDifference +"ms");
   setTimeout(function(){
-    $(".play").html(play());
+    $("#play-button").html(play());
     if (!isPlaying){
-      $(".play").html(play());
+      $("#play-button").html(play());
     }
   }, timeDifference);
 });
