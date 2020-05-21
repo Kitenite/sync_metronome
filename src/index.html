@@ -25,24 +25,25 @@
     </div>
     <!-- Active client count -->
     <div id="clients">
+      <span id="online-icon"></span>
       <span id="client-count">1</span> PLAYERS ONLINE
     </div>
     <!-- Tempo -->
-    <div id="tempo-box">
+    <div id="display-box">
       <p id="tempo-display">120</p>
-
+    </div>
+    <div id="resolution-box">
       <!-- Resolution -->
-      <div id="resolution">
-        <select onchange="noteResolution = this.selectedIndex;">
-          <option>16th notes
-          <option>8th notes
-          <option selected>Quarter notes
-        </select>
-      </div>
-
-      <input id="tempo-scroll" type="range" min="30.0" max="160.0" step="1" value="120" style="height: 20px; width: 200px" oninput="$('#tempo-display').html(event.target.value);">
+      <select id="resolution" onchange="noteResolution = this.selectedIndex;">
+        <option>16th notes
+        <option>8th notes
+        <option selected>Quarter notes
+      </select>
+    </div>
+    <div id="tempo-box">
+      <input id="tempo-scroll" type="range" min="30.0" max="160.0" step="1" value="120" oninput="$('#tempo-display').html(event.target.value);">
       <br/>
-      <button id="tempo-button" type="button" onclick="sendTempo();">change</button>
+      <button id="tempo-button" type="button" onclick="sendTempo();">Update BPM</button>
     </div>
     <!-- Media buttons -->
     <div id="media-buttons">
