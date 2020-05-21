@@ -217,6 +217,23 @@ input[type=range]:focus::-ms-fill-upper {
   align-items: center;
 }
 
+#blinkers-con{
+  margin: 2rem;
+  background: pink;
+  display: flex;
+  justify-content: space-around;
+  width: 30vw;
+}
+#blink {
+  height: 2rem;
+  width: 2rem;
+  background-color: var(--main-grey);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 /* tempo scroll */
 
 #tempo-box{

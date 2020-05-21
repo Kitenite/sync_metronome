@@ -7,6 +7,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.23.0/es6-shim.min.js"></script>
   <!-- add jQuery -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+  <script src="/js/jcanvas.min.js"></script>
   <!-- audio  -->
   <script src="/js/monkeypatch.js"></script>
   <script src="/js/metronome.js"></script>
@@ -32,6 +33,12 @@
     <div id="display-box">
       <p id="tempo-display">120</p>
     </div>
+      <div id="blinkers-con">
+        <div id="blink"></div>
+        <div id="blink"></div>
+        <div id="blink"></div>
+        <div id="blink"></div>
+      </div>
     <div id="resolution-box">
       <!-- Resolution -->
       <select id="resolution" onchange="noteResolution = this.selectedIndex;">
