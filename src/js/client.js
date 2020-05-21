@@ -67,6 +67,7 @@ function updateTempo(new_tempo){
     $("#tempo-scroll").val(tempo)
     $("#tempo-display").html(tempo);
   }
+  toggleTempoButton();
 }
 
 // Send new tempo to server
@@ -85,6 +86,17 @@ function tempoChange(amount){
   var newTempo = parseInt($("#tempo-scroll").val()) + amount;
   $("#tempo-scroll").val(newTempo)
   $("#tempo-display").html(newTempo);
+  toggleTempoButton();
+}
+
+function toggleTempoButton(){
+  console.log($("#tempo-scroll").val() , parseInt(tempo))
+  console.log($("#tempo-scroll").val() == parseInt(tempo))
+  if ($("#tempo-scroll").val() != parseInt(tempo)) {
+    $("#tempo-button").removeClass("inactive")
+  } else {
+    $("#tempo-button").addClass("inactive")
+  }
 }
 
 function playBeat(){

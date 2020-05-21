@@ -200,6 +200,11 @@ input[type=range]:focus::-ms-fill-upper {
   cursor:default;
 }
 
+.inactive{
+  background-color: var(--main-grey);
+  pointer-events: none;
+}
+
 /* Blinkers and animation  */
 #blinkers{
   margin: 2rem;
@@ -207,6 +212,15 @@ input[type=range]:focus::-ms-fill-upper {
   display: flex;
   justify-content: space-around;
   width: 30vw;
+}
+
+#blinkers:hover{
+  cursor:pointer;
+  filter: brightness(95%);
+}
+
+#blinkers:active{
+  filter: brightness(110%);
 }
 
 .blink {

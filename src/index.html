@@ -28,20 +28,22 @@
       <span id="online-icon"></span>
       <span id="client-count">1</span> PLAYERS ONLINE
     </div>
-    <!-- Tempo -->
+    <!-- Display BPM -->
     <div id="display-box">
       <p id="tempo-display">120</p>
     </div>
+    <!-- Blink on beat -->
     <div id="blinkers" onclick="toggleResolution();">
       <div id="blink-1" class="blink"></div>
       <div id="blink-2" class="blink"></div>
       <div id="blink-3" class="blink"></div>
       <div id="blink-4" class="blink"></div>
     </div>
+    <!-- Tempo -->
     <div id="tempo-box">
-      <input id="tempo-scroll" type="range" min="30.0" max="160.0" step="1" value="120" oninput="$('#tempo-display').html(event.target.value);">
+      <input id="tempo-scroll" type="range" min="30.0" max="160.0" step="1" value="120" oninput="$('#tempo-display').html(event.target.value); toggleTempoButton();">
       <br/>
-      <button id="tempo-button" type="button" onclick="sendTempo();">Update BPM</button>
+      <button class="inactive" id="tempo-button" type="button" onclick="sendTempo();">Update BPM</button>
     </div>
     <!-- Media buttons -->
     <div id="media-buttons">
