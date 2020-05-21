@@ -178,7 +178,6 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Display box */
 #display-box{
-  background:red;
   height: 20vh;
   display: flex;
   justify-content: center;
@@ -208,7 +207,6 @@ input[type=range]:focus::-ms-fill-upper {
 /* Blinkers and animation  */
 #blinkers{
   margin: 2rem;
-  background: pink;
   display: flex;
   justify-content: space-around;
   width: 30vw;
@@ -247,7 +245,6 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Resolution */
 #resolution-box{
-  background:green;
   height:10vh;
   display: flex;
   justify-content: center;
@@ -266,7 +263,6 @@ input[type=range]:focus::-ms-fill-upper {
 /* tempo scroll */
 
 #tempo-box{
-  background: pink;
   height: 20vh;
   display: flex;
   justify-content: center;
@@ -281,7 +277,6 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Media buttons */
 #media-buttons{
-  background: teal;
   height: 20vh;
   display: flex;
   align-items: center;
@@ -309,6 +304,6 @@ input[type=range]:focus::-ms-fill-upper {
     width: 80vw !important;
   }
   #blinkers{
-    width: 80vw;
+    width: 90vw;
   }
 }
