@@ -80,7 +80,7 @@ function sync(){
   socket.emit("syncDevices")
 }
 
-// Auxiliary change to tempo,
+// Auxiliary change to tempo
 function tempoChange(amount){
   var newTempo = parseInt($("#tempo-scroll").val()) + amount;
   $("#tempo-scroll").val(newTempo)
@@ -95,6 +95,7 @@ function playBeat(){
   }
 }
 
+// Tempo display helper
 function blink(div){
   div.removeClass("makeBlink");
    setTimeout(function() {
@@ -102,6 +103,10 @@ function blink(div){
    }, 1);
 }
 
+// Change resolution on click
+function toggleResolution(){
+  noteResolution = (noteResolution+1)%3
+}
 
 // Time sync handlers
 socket.on('timesync', function (data) {

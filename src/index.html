@@ -32,19 +32,11 @@
     <div id="display-box">
       <p id="tempo-display">120</p>
     </div>
-    <div id="blinkers">
+    <div id="blinkers" onclick="toggleResolution();">
       <div id="blink-1" class="blink"></div>
       <div id="blink-2" class="blink"></div>
       <div id="blink-3" class="blink"></div>
       <div id="blink-4" class="blink"></div>
-    </div>
-    <div id="resolution-box">
-      <!-- Resolution -->
-      <select id="resolution" onchange="noteResolution = this.selectedIndex;">
-        <option>16th notes
-        <option>8th notes
-        <option selected>Quarter notes
-      </select>
     </div>
     <div id="tempo-box">
       <input id="tempo-scroll" type="range" min="30.0" max="160.0" step="1" value="120" oninput="$('#tempo-display').html(event.target.value);">

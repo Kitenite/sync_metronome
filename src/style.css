@@ -37,7 +37,7 @@ button {
 	color:#ffffff;
 	font-family:Arial;
 	font-size:17px;
-	padding:16px 31px;
+	padding:12px 31px;
 	text-decoration:none;
 }
 button:hover {
@@ -200,24 +200,7 @@ input[type=range]:focus::-ms-fill-upper {
   cursor:default;
 }
 
-/* Resolution */
-#resolution-box{
-  background:green;
-  height:10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  resize: both;
-  flex-direction: column;
-}
-
-#resolution{
-  height: 10vh;
-  width: 30vw;
-  display: flex;
-  align-items: center;
-}
-
+/* Blinkers and animation  */
 #blinkers{
   margin: 2rem;
   background: pink;
@@ -246,6 +229,24 @@ input[type=range]:focus::-ms-fill-upper {
     -webkit-animation-duration: 900ms;
     -webkit-animation-iteration-count: 1;
     -webkit-animation-timing-function: ease-in-out;
+}
+
+/* Resolution */
+#resolution-box{
+  background:green;
+  height:10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  resize: both;
+  flex-direction: column;
+}
+
+#resolution{
+  height: 10vh;
+  width: 30vw;
+  display: flex;
+  align-items: center;
 }
 
 /* tempo scroll */
@@ -282,7 +283,6 @@ input[type=range]:focus::-ms-fill-upper {
   margin: 2rem;
 }
 
-
 /* Mobile */
 @media only screen and (max-width: 600px) {
   #screen {
@@ -293,5 +293,8 @@ input[type=range]:focus::-ms-fill-upper {
   }
   #tempo-scroll{
     width: 80vw !important;
+  }
+  #blinkers{
+    width: 80vw;
   }
 }

@@ -121,34 +121,21 @@ function draw() {
   // set up to draw again
   requestAnimFrame(draw);
 }
-
 function init(){
-
-    blinkers = $("#blinkers").children();
-    // NOTE: THIS RELIES ON THE MONKEYPATCH LIBRARY BEING LOADED FROM
-    // Http://cwilso.github.io/AudioContext-MonkeyPatch/AudioContextMonkeyPatch.js
-    // TO WORK ON CURRENT CHROME!!  But this means our code can be properly
-    // spec-compliant, and work on Chrome, Safari and Firefox.
-
-    audioContext = new AudioContext();
-
-    // if we wanted to load audio files, etc., this is where we should do it.
-
-
-
-    requestAnimFrame(draw);    // start the drawing loop.
-
-    timerWorker = new Worker("/js/metronomeworker.js");
-
-    timerWorker.onmessage = function(e) {
-        if (e.data == "tick") {
-            // console.log("tick!");
-            scheduler();
-        }
-        else
-            console.log("message: " + e.data);
-    };
-    timerWorker.postMessage({"interval":lookahead});
+  blinkers = $("#blinkers").children();
+  // NOTE: THIS RELIES ON THE MONKEYPATCH LIBRARY BEING LOADED FROM
+  // Http://cwilso.github.io/AudioContext-MonkeyPatch/AudioContextMonkeyPatch.js
+  // TO WORK ON CURRENT CHROME!!  But this means our code can be properly
+  // spec-compliant, and work on Chrome, Safari and Firefox.
+  audioContext = new AudioContext();
+  // if we wanted to load audio files, etc., this is where we should do it.
+  requestAnimFrame(draw);    // start the drawing loop.
+  timerWorker = new Worker("/js/metronomeworker.js");
+  timerWorker.onmessage = function(e) {
+      if (e.data == "tick") {scheduler();}
+      else{console.log("message: " + e.data);}
+  };
+  timerWorker.postMessage({"interval":lookahead});
 }
 
 window.addEventListener("load", init );
