@@ -101,54 +101,30 @@ function play() {
         return true;
     }
 }
-
-function resetCanvas (e) {
-    // resize the canvas - but remember - this clears the canvas too.
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    //make sure we scroll to the top left.
-    window.scrollTo(0,0);
-}
-
+var lastNotePartition = -1
 function draw() {
-    var currentNote = last16thNoteDrawn;
-    var currentTime = audioContext.currentTime;
+  var currentNote = last16thNoteDrawn;
+  var currentTime = audioContext.currentTime;
 
-    while (notesInQueue.length && notesInQueue[0].time < currentTime) {
-        currentNote = notesInQueue[0].note;
-        notesInQueue.splice(0,1);   // remove note from queue
-    }
-
-    // We only need to draw if the note has moved.
-    if (last16thNoteDrawn != currentNote) {
-        var x = Math.floor( canvas.width / 18 );
-        canvasContext.clearRect(0,0,canvas.width, canvas.height);
-        for (var i=0; i<16; i++) {
-            canvasContext.fillStyle = ( currentNote == i ) ?
-                ((currentNote%4 === 0)?"red":"blue") : "black";
-            canvasContext.fillRect( x * (i+1), x, x/2, x/2 );
-        }
-        last16thNoteDrawn = currentNote;
-    }
-
-    // set up to draw again
-    requestAnimFrame(draw);
+  while (notesInQueue.length && notesInQueue[0].time < currentTime) {
+      currentNote = notesInQueue[0].note;
+      notesInQueue.splice(0,1);   // remove note from queue
+  }
+  // We only need to draw if the note has moved.
+  // Not partition since we only care about every 4 notes
+  var notePartition = parseInt(currentNote/4)
+  if (last16thNoteDrawn != currentNote && lastNotePartition !=notePartition) {
+    blink(blinkers.eq(notePartition))
+    lastNotePartition = notePartition;
+    last16thNoteDrawn = currentNote;
+  }
+  // set up to draw again
+  requestAnimFrame(draw);
 }
 
 function init(){
-    var container = document.createElement( 'div' );
 
-    container.className = "container";
-    canvas = document.createElement( 'canvas' );
-    canvasContext = canvas.getContext( '2d' );
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    document.body.appendChild( container );
-    container.appendChild(canvas);
-    canvasContext.strokeStyle = "#ffffff";
-    canvasContext.lineWidth = 2;
-
+    blinkers = $("#blinkers").children();
     // NOTE: THIS RELIES ON THE MONKEYPATCH LIBRARY BEING LOADED FROM
     // Http://cwilso.github.io/AudioContext-MonkeyPatch/AudioContextMonkeyPatch.js
     // TO WORK ON CURRENT CHROME!!  But this means our code can be properly
@@ -158,8 +134,7 @@ function init(){
 
     // if we wanted to load audio files, etc., this is where we should do it.
 
-    window.onorientationchange = resetCanvas;
-    window.onresize = resetCanvas;
+
 
     requestAnimFrame(draw);    // start the drawing loop.
 

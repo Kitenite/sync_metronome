@@ -6,6 +6,7 @@
   --alt-blue: #5ABEFE;
   --main-green: #66E1B7;
   --main-grey: #CBCBCB;
+  --main-red: #FF9393;
   --main-txt-color: #6E6A6A;
 }
 
@@ -217,14 +218,15 @@ input[type=range]:focus::-ms-fill-upper {
   align-items: center;
 }
 
-#blinkers-con{
+#blinkers{
   margin: 2rem;
   background: pink;
   display: flex;
   justify-content: space-around;
   width: 30vw;
 }
-#blink {
+
+.blink {
   height: 2rem;
   width: 2rem;
   background-color: var(--main-grey);
@@ -232,6 +234,18 @@ input[type=range]:focus::-ms-fill-upper {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+@-webkit-keyframes blink-animation {
+    0% {background-color:var(--main-red);}
+    100% {background-color:var(--main-grey);}
+}
+
+.makeBlink {
+    -webkit-animation-name: blink-animation;
+    -webkit-animation-duration: 900ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-in-out;
 }
 
 /* tempo scroll */

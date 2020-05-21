@@ -95,6 +95,13 @@ function playBeat(){
   }
 }
 
+function blink(div){
+  div.removeClass("makeBlink");
+   setTimeout(function() {
+     div.addClass("makeBlink");
+   }, 1);
+}
+
 
 // Time sync handlers
 socket.on('timesync', function (data) {
