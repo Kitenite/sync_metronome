@@ -20,30 +20,35 @@
 <body>
   <div id="screen">
     <!-- Sync button -->
-   <button id="sync-button" onclick="sync();" type="button">sync</button>
+    <div id="sync">
+      <img id="sync-button" src="/images/sync.png" onclick="sync();" type="button"/>
+    </div>
     <!-- Active client count -->
     <div id="clients">
       <span id="client-count">1</span> PLAYERS ONLINE
     </div>
     <!-- Tempo -->
-    <div id="tempoBox">Tempo:
-      <span id="showTempo">120</span>BPM
-      <input id="tempo" type="range" min="30.0" max="160.0" step="1" value="120" style="height: 20px; width: 200px" oninput="document.getElementById('showTempo').innerText=event.target.value;">
+    <div id="tempo-box">
+      <p id="tempo-display">120</p>
+
+      <!-- Resolution -->
+      <div id="resolution">
+        <select onchange="noteResolution = this.selectedIndex;">
+          <option>16th notes
+          <option>8th notes
+          <option selected>Quarter notes
+        </select>
+      </div>
+
+      <input id="tempo-scroll" type="range" min="30.0" max="160.0" step="1" value="120" style="height: 20px; width: 200px" oninput="$('#tempo-display').html(event.target.value);">
+      <br/>
       <button id="tempo-button" type="button" onclick="sendTempo();">change</button>
-    </div>
-    <!-- Resolution -->
-    <div id="resultion">Resolution:
-      <select onchange="noteResolution = this.selectedIndex;">
-        <option>16th notes
-        <option>8th notes
-        <option selected>Quarter notes
-      </select>
     </div>
     <!-- Media buttons -->
     <div id="media-buttons">
-      <button id="tempo-decrease-button" onclick="tempoChange(-1)" type="button">decrease</button>
-      <button id="play-button" onclick="emitPlay();" type="button">play</button>
-      <button id="tempo-increase-button" onclick="tempoChange(1)" type="button">increase</button>
+      <img id="tempo-change-button" src="/images/minus.png" onclick="tempoChange(-1)" type="button"/>
+      <img id="play-button" src="/images/play.png" onclick="emitPlay();" type="button"/>
+      <img id="tempo-change-button" src="/images/plus.png" onclick="tempoChange(1)" type="button"/>
     </div>
   </div>
 </body>

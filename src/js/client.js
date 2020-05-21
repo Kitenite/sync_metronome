@@ -26,10 +26,10 @@ function emitPlay(){
   // Request next beat from server
   if(!isPlaying){
     socket.emit('requestNextBeat');
-    $("#play-button").html("wait");
+    $("#play-button").attr("src","/images/wait.png");
     waitingForBeat = true
   } else{
-    $("#play-button").html(play());
+    playBeat()
     waitingForBeat = false
   }
 }
@@ -48,9 +48,9 @@ socket.on('nextBeatSent', function (data) {
     timeDifference = nextBeat - ts.now();
   }
   setTimeout(function(){
-    $("#play-button").html(play());
+    playBeat()
     if (!isPlaying){
-      $("#play-button").html(play());
+      playBeat()
     }
   }, timeDifference);
 });
@@ -64,14 +64,14 @@ function updateTempo(new_tempo){
   if (new_tempo != tempo){
     tempo = new_tempo
     rate = 60000/tempo
-    $("#tempo").val(tempo)
-    $("#showTempo").html(tempo);
+    $("#tempo-scroll").val(tempo)
+    $("#tempo-display").html(tempo);
   }
 }
 
 // Send new tempo to server
 function sendTempo(){
-  tempo = $("#tempo").val();
+  tempo = $("#tempo-scroll").val();
   socket.emit("requestNewTempo", {tempo: tempo})
 }
 
@@ -82,9 +82,17 @@ function sync(){
 
 // Auxiliary change to tempo,
 function tempoChange(amount){
-  var newTempo = parseInt($("#tempo").val()) + amount;
-  $("#tempo").val(newTempo)
-  $("#showTempo").html(newTempo);
+  var newTempo = parseInt($("#tempo-scroll").val()) + amount;
+  $("#tempo-scroll").val(newTempo)
+  $("#tempo-display").html(newTempo);
+}
+
+function playBeat(){
+  if (play()){
+    $("#play-button").attr("src","/images/play.png");
+  } else{
+    $("#play-button").attr("src","/images/pause.png");
+  }
 }
 
 
