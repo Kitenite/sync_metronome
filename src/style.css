@@ -1,5 +1,4 @@
 /* Global */
-
 :root {
   --main-white: white;
   --main-blue: #74C9FF;
@@ -12,7 +11,7 @@
 
 html,body {
   height: 100%;
-  width:100%;
+  width: 100%;
   overflow: hidden;
   margin:0;
   font-family: Arial, Helvetica, sans-serif;
@@ -20,6 +19,9 @@ html,body {
 }
 
 /* images (secretly buttons) */
+img{
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 img:hover{
   filter: brightness(95%);
   cursor:pointer;
@@ -47,7 +49,10 @@ button:active {
 	position:relative;
 	top:1px;
 }
-
+button:focus {
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 input[type=range] {
   -webkit-appearance: none;
   margin: 10px 0;
@@ -141,8 +146,8 @@ input[type=range]:focus::-ms-fill-upper {
 /* App container */
 #screen {
   background: var(--main-white);
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -154,7 +159,7 @@ input[type=range]:focus::-ms-fill-upper {
 /* Sync button */
 #sync{
   width: 40%;
-  height:7vh;
+  height:7%;
 }
 #sync-button {
   float: right;
@@ -177,7 +182,7 @@ input[type=range]:focus::-ms-fill-upper {
   margin-right: 0.5rem;
 }
 
-/* Display box */
+/* BPM display */
 #display-box{
   height: 20vh;
   display: flex;
@@ -192,20 +197,20 @@ input[type=range]:focus::-ms-fill-upper {
      -khtml-user-select: none; /* Konqueror HTML */
        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 #tempo-display:hover{
   cursor:default;
 }
 
+/* Use to make button inactive */
 .inactive{
   background-color: var(--main-grey);
   pointer-events: none;
 }
 
 /* Blinkers and animation  */
+
 #blinkers{
   margin: 2rem;
   display: flex;
@@ -262,7 +267,6 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 /* tempo scroll */
-
 #tempo-box{
   height: 20vh;
   display: flex;
@@ -271,7 +275,7 @@ input[type=range]:focus::-ms-fill-upper {
   resize: both;
   flex-direction: column;
 }
-/* tempo-scroll custom UI */
+/* tempo-scroll */
 #tempo-scroll{
   width: 25vw !important;
 }
@@ -299,7 +303,6 @@ input[type=range]:focus::-ms-fill-upper {
     width: 90%;
     height:7vh;
   }
-
   #tempo-scroll{
     width: 80vw !important;
   }
