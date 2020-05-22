@@ -68,7 +68,7 @@ input[type=range]::-webkit-slider-runnable-track {
   animate: 0.2s;
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
   background: var(--main-blue);
-  border-radius: 1vh;
+  border-radius: 2vh;
   border: 0px solid var(--main-blue);
 }
 input[type=range]::-webkit-slider-thumb {
@@ -169,7 +169,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Active clients */
 #clients{
-  height:5vh;
+  height:5%;
   font-size: 2.3vh;
   font-weight:bold;
 }
@@ -184,7 +184,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* BPM display */
 #display-box{
-  height: 20vh;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -249,26 +249,9 @@ input[type=range]:focus::-ms-fill-upper {
     -webkit-animation-timing-function: ease-in-out;
 }
 
-/* Resolution */
-#resolution-box{
-  height:10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  resize: both;
-  flex-direction: column;
-}
-
-#resolution{
-  height: 10vh;
-  width: 30vw;
-  display: flex;
-  align-items: center;
-}
-
 /* tempo scroll */
 #tempo-box{
-  height: 20vh;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -282,7 +265,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Media buttons */
 #media-buttons{
-  height: 20vh;
+  height: 20%;
   display: flex;
   align-items: center;
 }
