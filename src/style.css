@@ -165,7 +165,8 @@ input[type=range]:focus::-ms-fill-upper {
 /* Active clients */
 #clients{
   height:5vh;
-  font-size: 2.5vh;
+  font-size: 2.3vh;
+  font-weight:bold;
 }
 #online-icon{
   height: 1rem;
@@ -222,8 +223,8 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .blink {
-  height: 2rem;
-  width: 2rem;
+  height: 2.5rem;
+  width: 2.5rem;
   background-color: var(--main-grey);
   border-radius: 50%;
   display: flex;
@@ -293,13 +294,12 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 /* Mobile */
-@media only screen and (max-width: 600px) {
-  #screen {
-  }
+@media screen and (max-width: 600px) {
   #sync{
     width: 90%;
     height:7vh;
   }
+
   #tempo-scroll{
     width: 80vw !important;
   }

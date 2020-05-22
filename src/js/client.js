@@ -37,7 +37,6 @@ function emitPlay(){
 // Receive next beat from server
 socket.on('nextBeatSent', function (data) {
   if (!waitingForBeat){
-    console.log("not ready")
     return
   }
   updateTempo(data.tempo)
@@ -90,8 +89,6 @@ function tempoChange(amount){
 }
 
 function toggleTempoButton(){
-  console.log($("#tempo-scroll").val() , parseInt(tempo))
-  console.log($("#tempo-scroll").val() == parseInt(tempo))
   if ($("#tempo-scroll").val() != parseInt(tempo)) {
     $("#tempo-button").removeClass("inactive")
   } else {
