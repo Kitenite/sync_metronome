@@ -9,6 +9,7 @@ var current16thNote;        // What note is currently last scheduled?
 var tempo = 120.0;          // tempo (in beats per minute)
 var lookahead = 25.0;       // How frequently to call scheduling function
                             //(in milliseconds)
+var soundFrequency = 880.0;
 var scheduleAheadTime = 0.1;    // How far ahead to schedule audio (sec)
                             // This is calculated from lookahead, and overlaps
                             // with next interval (in case the timer is late)
@@ -62,9 +63,9 @@ function scheduleNote( beatNumber, time ) {
     // if (beatNumber % 16 === 0)    // beat 0 == high pitch
     //     osc.frequency.value = 880.0;
     if (beatNumber % 4 === 0 )    // quarter notes = medium pitch
-        osc.frequency.value = 440.0;
+        osc.frequency.value = soundFrequency
     else                        // other 16th notes = low pitch
-        osc.frequency.value = 220.0;
+        osc.frequency.value = soundFrequency/2;
 
     osc.start( time );
     osc.stop( time + noteLength );
